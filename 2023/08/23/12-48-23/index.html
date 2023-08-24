@@ -27,7 +27,7 @@
 <meta property="og:description" content="排序最小的k个数剑指 Offer 40. 最小的k个数 - 力扣（LeetCode） 基础知识堆堆（Heap）是一种基于完全二叉树结构的数据结构，具有以下特点：  堆的性质（最大堆和最小堆）：堆可以分为最大堆和最小堆两种类型。在最大堆中，父节点的值大于或等于其子节点的值，即堆顶元素是最大的；而在最小堆中，父节点的值小于或等于其子节点的值，即堆顶元素是最小的。这种性质使得堆顶元素具有一定的顺序关系，">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-08-23T04:48:23.000Z">
-<meta property="article:modified_time" content="2023-08-24T10:09:20.319Z">
+<meta property="article:modified_time" content="2023-08-24T15:16:45.873Z">
 <meta property="article:author" content="Rachel">
 <meta property="article:tag" content="秋招">
 <meta name="twitter:card" content="summary">
@@ -225,7 +225,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-24 18:09:20" itemprop="dateModified" datetime="2023-08-24T18:09:20+08:00">2023-08-24</time>
+      <time title="修改时间：2023-08-24 23:16:45" itemprop="dateModified" datetime="2023-08-24T23:16:45+08:00">2023-08-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -438,9 +438,11 @@
 </li>
 <li><p>空间: 和时间复杂度相关，每次递归需要的空间是固定的，总体空间复杂度即为递归层数，因此平均&#x2F;最好空间复杂度为<br>$$<br>O(logn)<br>$$<br>最坏空间复杂度为<br>$$<br>O(n)<br>$$</p>
 </li>
+</ol>
+</li>
 <li><p>空间复杂度为O(1)也就是说通过一次遍历，把数组分成三个部分</p>
 <ol>
-<li>需要找出所有的 000 交换至数组的头部，并且找出所有的 222 交换至数组的尾部，一个指针 p2  是从右向左移动的，因此当我们在从左向右遍历整个数组时，如果遍历到的位置超过了p2 ，那么就可以直接停止遍历了。注意碰到2的时候交换过来什么并不知道所以i不能移动。</li>
+<li>需要找出所有的 000 交换至数组的头部，并且找出所有的 222 交换至数组的尾部，一个指针 p2  是从右向左移动的，因此当我们在从左向右遍历整个数组时，如果遍历到的位置超过了p2 ，那么就可以直接停止遍历了。注意碰到2的时候交换过来什么并不知道所以i不能移动。<ol start="2">
 <li>同样也是双指针，一定要注意区间的开闭，这里选择左闭右开（01），2选择左开右闭；所以循环遍历到i&lt;&#x3D;p2</li>
 </ol>
 </li>
@@ -489,8 +491,7 @@
 </ol>
 <h3 id="代码-7"><a href="#代码-7" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">countSmaller</span><span class="params">(vector&lt;<span class="type">int</span>&gt; vec)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (vec.<span class="built_in">empty</span>())    <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">        vector&lt;pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt;&gt; nums;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; vec.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            nums.<span class="built_in">emplace_back</span>(vec[i], i);</span><br><span class="line">        &#125;</span><br><span class="line">        vector&lt;pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt;&gt; <span class="built_in">tmp</span>(vec.<span class="built_in">size</span>());</span><br><span class="line">        res = <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(vec.<span class="built_in">size</span>(), <span class="number">0</span>);</span><br><span class="line">        <span class="built_in">mergeSort</span>(nums, <span class="number">0</span>, vec.<span class="built_in">size</span>() - <span class="number">1</span>, tmp);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">mergeSort</span><span class="params">(vector&lt;pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt;&gt;&amp; nums, <span class="type">int</span> l, <span class="type">int</span> r, vector&lt;pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt;&gt;&amp; tmp)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (l &gt;= r)    <span class="keyword">return</span>;</span><br><span class="line">        <span class="type">int</span> m = (l + r) / <span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span> i = l, j = m+<span class="number">1</span>;</span><br><span class="line">        <span class="built_in">mergeSort</span>(nums, l, m, tmp); <span class="built_in">mergeSort</span>(nums, m + <span class="number">1</span>, r, tmp);</span><br><span class="line">        <span class="type">int</span> k = l;</span><br><span class="line">        <span class="keyword">for</span> (k = l; k &lt;= r; k++) &#123;</span><br><span class="line">            tmp[k] = nums[k];</span><br><span class="line">        &#125;</span><br><span class="line">        k = l;</span><br><span class="line">        <span class="keyword">while</span> (i&lt;=m&amp;&amp;j&lt;=r)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (tmp[i].first &lt;= tmp[j].first) &#123;</span><br><span class="line">                res[tmp[i].second] += j - m - <span class="number">1</span>;</span><br><span class="line">                nums[k++] = tmp[i++];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                nums[k++] = tmp[j++];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (i&lt;=m)</span><br><span class="line">        &#123;</span><br><span class="line">            res[tmp[i].second] += j - m - <span class="number">1</span>;</span><br><span class="line">            nums[k++] = tmp[i++];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span>(j&lt;=r)  nums[k++] = tmp[j++];</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-
-
+<p>新增测试</p>
 
     </div>
 
