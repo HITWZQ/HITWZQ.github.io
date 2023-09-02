@@ -1516,4 +1516,164 @@ bool res=s.searchMatrix(matirx,0);
         <tag>秋招</tag>
       </tags>
   </entry>
+  <entry>
+    <title>动态规划</title>
+    <url>/2023/09/02/15-05-22/</url>
+    <content><![CDATA[<h1 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h1><h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="与贪心的区别"><a href="#与贪心的区别" class="headerlink" title="与贪心的区别"></a>与贪心的区别</h3><p>动态规划中每一个状态一定是由上一个状态推导出来的，<strong>这一点就区分于贪心</strong>，贪心没有状态推导，而是从局部直接选最优的</p>
+<h3 id="基本步骤"><a href="#基本步骤" class="headerlink" title="基本步骤"></a>基本步骤</h3><ol>
+<li>确定<code>dp</code>数组（<code>dp table</code>）以及下标的含义</li>
+<li>确定递推公式</li>
+<li><code>dp</code>数组如何初始化</li>
+<li>确定遍历顺序</li>
+<li>举例推导<code>dp</code>数组</li>
+</ol>
+<h3 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h3><p>将<code>dp</code>数组打印</p>
+<h2 id="基础题目"><a href="#基础题目" class="headerlink" title="基础题目"></a>基础题目</h2><h3 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a>斐波那契数列</h3><p><a href="https://leetcode.cn/problems/fibonacci-number/">509. 斐波那契数 - 力扣（LeetCode）</a></p>
+<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><ol>
+<li><p>确定<code>dp</code>数组（<code>dp table</code>）以及下标的含义</p>
+<p><code>dp[i]</code>的定义为：第i个数的斐波那契数值是	<code>dp[i]</code>	</p>
+</li>
+<li><p>确定递推公式</p>
+<p> <code>dp[i] = dp[i - 1] + dp[i - 2];</code></p>
+</li>
+<li><p><code>dp</code>数组如何初始化</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">dp[0] = 0;</span><br><span class="line">dp[1] = 1;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>确定遍历顺序</p>
+<p>遍历的顺序一定是从前到后遍历的</p>
+</li>
+<li><p>举例推导<code>dp</code>数组</p>
+<p>按照这个递推公式<code>dp[i] = dp[i - 1] + dp[i - 2]</code>，我们来推导一下，当N为10的时候，<code>dp</code>数组应该是如下的数列：</p>
+<p><code>0 1 1 2 3 5 8 13 21 34 55</code></p>
+</li>
+</ol>
+<h4 id="错误"><a href="#错误" class="headerlink" title="错误"></a>错误</h4><ol>
+<li>对于0会访问越界：初始化直接返回就可以</li>
+</ol>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">fib</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">dp</span><span class="params">(n+<span class="number">1</span>)</span></span>;</span><br><span class="line">        dp[<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">        dp[<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">2</span>;i&lt;=n;i++)&#123;</span><br><span class="line">            dp[i]=dp[i<span class="number">-1</span>]+dp[i<span class="number">-2</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="爬楼梯"><a href="#爬楼梯" class="headerlink" title="爬楼梯"></a>爬楼梯</h3><p><a href="https://leetcode.cn/problems/climbing-stairs/">70. Climbing Stairs - 力扣（LeetCode）</a></p>
+<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>为什么能想到动态规划：</p>
+<p>爬到第一层楼梯有一种方法，爬到二层楼梯有两种方法。</p>
+<p>那么第一层楼梯再跨两步就到第三层 ，第二层楼梯再跨一步就到第三层。</p>
+<p>所以到第三层楼梯的状态可以由第二层楼梯 和 到第一层楼梯状态推导出来，那么就可以想到动态规划了。</p>
+<ol>
+<li><p>确定<code>dp</code>数组（<code>dp table</code>）以及下标的含义</p>
+<p>下标代表总共整个走了多少级台阶，数组代表有多少种方法</p>
+</li>
+<li><p>确定递推公式</p>
+<p><code>dp[i]=dp[i-1]+dp[i-2];</code></p>
+</li>
+<li><p><code>dp</code>数组如何初始化</p>
+<p><code>dp[1]=1</code>,<code>dp[2]=2</code></p>
+</li>
+<li><p>确定遍历顺序</p>
+<p>从前往后遍历</p>
+</li>
+<li><p>举例推导<code>dp</code>数组</p>
+</li>
+</ol>
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">fib</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">dp</span><span class="params">(n + <span class="number">1</span>)</span></span>;</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        dp[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">2</span>; i &lt;= n; i++) &#123;</span><br><span class="line">            dp[i] = dp[i - <span class="number">1</span>] + dp[i - <span class="number">2</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[n];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">climbStairs</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">dp</span><span class="params">(n + <span class="number">1</span>)</span></span>;</span><br><span class="line">        dp[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">        dp[<span class="number">2</span>] = <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">3</span>; i &lt;= n; i++) &#123;</span><br><span class="line">            dp[i] = dp[i - <span class="number">1</span>] + dp[i - <span class="number">2</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">            cout &lt;&lt; dp[i] &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用最小花费爬楼梯"><a href="#使用最小花费爬楼梯" class="headerlink" title="使用最小花费爬楼梯"></a>使用最小花费爬楼梯</h3><p><a href="https://leetcode.cn/problems/min-cost-climbing-stairs/">746. 使用最小花费爬楼梯 - 力扣（LeetCode）</a></p>
+<h4 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h4><ol>
+<li><p><code>dp</code>下标以及数组含义</p>
+<p>下标代表第几层楼梯，数组代表爬到这一层的最小精力</p>
+</li>
+<li><p>递归公式</p>
+<p><code>dp[i]=min(dp[i-1]+cost[i-1,]dp[i-2]+cost[i-2]);</code></p>
+</li>
+<li><p>初始化</p>
+<p><code>dp[0]=0</code>,<code>dp[1]=cost[0]</code></p>
+</li>
+<li><p>遍历顺序</p>
+<p>从前往后</p>
+</li>
+<li><p>输出<code>dp</code>数组</p>
+</li>
+</ol>
+<h4 id="错误-1"><a href="#错误-1" class="headerlink" title="错误"></a>错误</h4><ol>
+<li>题目告诉一开始可以在第一层或第0层，所以<code>dp[1]=0</code>而不是	<code>dp[1]=cost[0]</code></li>
+</ol>
+<h4 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minCostClimbingStairs</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; cost)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = cost.<span class="built_in">size</span>();</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">dp</span><span class="params">(n + <span class="number">1</span>)</span></span>;</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        dp[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">2</span>; i &lt;= n; i++) &#123;</span><br><span class="line">            dp[i] = <span class="built_in">min</span>(dp[i - <span class="number">1</span>] + cost[i - <span class="number">1</span>], dp[i - <span class="number">2</span>] + cost[i - <span class="number">2</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt;= n; i++) &#123;</span><br><span class="line">            cout &lt;&lt; dp[i] &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="不同路径"><a href="#不同路径" class="headerlink" title="不同路径"></a>不同路径</h3><p><a href="https://leetcode.cn/problems/unique-paths/">62. 不同路径 - 力扣（LeetCode）</a></p>
+<h4 id="思路-3"><a href="#思路-3" class="headerlink" title="思路"></a>思路</h4><ol>
+<li><p>dp数组</p>
+<p>二维数组，索引代表位置，数组代表走法</p>
+</li>
+<li><p>初始化</p>
+<p>轴方向都只有一种走法</p>
+</li>
+<li><p>递推公式</p>
+<p>因为只能向下向右走。</p>
+</li>
+<li><p>遍历顺序</p>
+<p>双重循环，一列一列来</p>
+</li>
+<li><p>举例验证</p>
+</li>
+</ol>
+<h4 id="错误-2"><a href="#错误-2" class="headerlink" title="错误"></a>错误</h4><ol>
+<li>初始化不是0而是1</li>
+</ol>
+<h4 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">uniquePaths</span><span class="params">(<span class="type">int</span> m, <span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">    vector&lt; vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">dp</span>(m, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(n, <span class="number">0</span>));</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (i==<span class="number">0</span>||j==<span class="number">0</span>) dp[i][j] = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                dp[i][j] = dp[i - <span class="number">1</span>][j] + dp[i][j - <span class="number">1</span>];</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[m - <span class="number">1</span>][n - <span class="number">1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="不同路径II"><a href="#不同路径II" class="headerlink" title="不同路径II"></a>不同路径II</h3><h4 id="思路-4"><a href="#思路-4" class="headerlink" title="思路"></a>思路</h4><ol>
+<li><p><code>dp</code>数组</p>
+<p>二维数组，索引代表位置，数组代表走法</p>
+</li>
+<li><p>初始化</p>
+<p>轴方向都只有一种走法。这里因为有障碍所以在轴方向障碍之后的地方都应该是0，也就是说我们在进行初始化的时候加一个判断条件是当前不是石头，是石头就跳出循环停止初始化为1。</p>
+</li>
+<li><p>递推公式</p>
+<p>因为只能向下向右走。</p>
+</li>
+<li><p>遍历顺序</p>
+<p>双重循环，一列一列来</p>
+</li>
+<li><p>举例验证</p>
+</li>
+</ol>
+<h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><ol>
+<li>怎么初始化<ol>
+<li>跟石头的位置有关系：先找到石头的位置：如果石头在第一行或者第一列，那么石头之后的整行或者整列剩下的部分就都是0不是1。</li>
+</ol>
+</li>
+<li>初始化：</li>
+</ol>
+<h4 id="错误-3"><a href="#错误-3" class="headerlink" title="错误"></a>错误</h4><ol>
+<li>障碍物不只有一个：所以不能记住障碍物的位置</li>
+</ol>
+<h4 id="代码-4"><a href="#代码-4" class="headerlink" title="代码"></a>代码</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">uniquePathsWithObstacles</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; obstacleGrid)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> m = obstacleGrid.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> n = obstacleGrid[<span class="number">0</span>].<span class="built_in">size</span>();</span><br><span class="line">	<span class="keyword">if</span> (obstacleGrid[m - <span class="number">1</span>][n - <span class="number">1</span>] == <span class="number">1</span> || obstacleGrid[<span class="number">0</span>][<span class="number">0</span>] == <span class="number">1</span>) <span class="comment">//如果在起点或终点出现了障碍，直接返回0</span></span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">dp</span>(m, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(n, <span class="number">0</span>));</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m &amp;&amp; obstacleGrid[i][<span class="number">0</span>] == <span class="number">0</span>; i++) dp[i][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n &amp;&amp; obstacleGrid[<span class="number">0</span>][j] == <span class="number">0</span>; j++) dp[<span class="number">0</span>][j] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; m; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt; n; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (obstacleGrid[i][j] == <span class="number">0</span>) </span><br><span class="line">                dp[i][j] = dp[i - <span class="number">1</span>][j] + dp[i][j - <span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[m - <span class="number">1</span>][n - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="整数拆分"><a href="#整数拆分" class="headerlink" title="整数拆分"></a>整数拆分</h3><p><a href="https://leetcode.cn/problems/integer-break/">343. 整数拆分 - 力扣（LeetCode）</a></p>
+<h4 id="思路-5"><a href="#思路-5" class="headerlink" title="思路"></a>思路</h4><ol>
+<li><p>确定<code>dp</code>数组（<code>dp table</code>）以及下标的含义</p>
+<p>dp[i]：分拆数字i，<strong>可以得到的最大乘积为dp[i]。</strong></p>
+</li>
+<li><p>确定递推公式</p>
+</li>
+<li><p><code>dp</code>数组如何初始化</p>
+</li>
+<li><p>确定遍历顺序</p>
+</li>
+<li><p>举例推导<code>dp</code>数组</p>
+</li>
+</ol>
+<h4 id="问题-1"><a href="#问题-1" class="headerlink" title="问题"></a>问题</h4><ol>
+<li><code>dp[i]</code>最大乘积是怎么得到的:一个是j * (i - j) 直接相乘。一个是j * dp[i - j]<ol>
+<li>j怎么就不拆分：</li>
+</ol>
+</li>
+</ol>
+<h4 id="错误-4"><a href="#错误-4" class="headerlink" title="错误"></a>错误</h4><h4 id="代码-5"><a href="#代码-5" class="headerlink" title="代码"></a>代码</h4><h2 id="背包问题"><a href="#背包问题" class="headerlink" title="背包问题"></a>背包问题</h2><h3 id="01背包"><a href="#01背包" class="headerlink" title="01背包"></a>01背包</h3><h3 id="完全背包"><a href="#完全背包" class="headerlink" title="完全背包"></a>完全背包</h3><h2 id="打家劫舍"><a href="#打家劫舍" class="headerlink" title="打家劫舍"></a>打家劫舍</h2><h2 id="股票问题"><a href="#股票问题" class="headerlink" title="股票问题"></a>股票问题</h2><h2 id="子序列问题"><a href="#子序列问题" class="headerlink" title="子序列问题"></a>子序列问题</h2><h3 id="子序列不连续"><a href="#子序列不连续" class="headerlink" title="子序列不连续"></a>子序列不连续</h3><h3 id="子序列连续"><a href="#子序列连续" class="headerlink" title="子序列连续"></a>子序列连续</h3><h3 id="编辑距离"><a href="#编辑距离" class="headerlink" title="编辑距离"></a>编辑距离</h3><h3 id="回文"><a href="#回文" class="headerlink" title="回文"></a>回文</h3>]]></content>
+      <categories>
+        <category>LeetCode</category>
+        <category>动态规划</category>
+      </categories>
+      <tags>
+        <tag>秋招</tag>
+      </tags>
+  </entry>
 </search>
